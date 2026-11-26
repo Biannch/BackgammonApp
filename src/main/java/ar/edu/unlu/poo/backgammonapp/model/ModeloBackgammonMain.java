@@ -81,8 +81,8 @@ public class ModeloBackgammonMain implements Observable {
         notificarObservadores();
     }
 
-    public Object getDadosDisponibles(){
-        return null;
+    public List<Integer> getDadosDisponibles(){
+        return turno.getMovimientosDisponibles();
     }
 
     public EstadoPartida estadoPartida(){

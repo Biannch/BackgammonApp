@@ -51,7 +51,7 @@ public class BackgammonController implements Observador {
                     if(!modelo.tirarDados()){
                         vistaConsol.mostrarMensaje(">> Usted ya tiene dados para usar.");
                     }
-                    // mostrar mensaje de valores disponibles para usar
+                    vistaConsol.mostrarDados(modelo.getDadosDisponibles());
                 }
                 case 2 -> {
                     int origen = vistaConsol.pedirPunta(">> Punta origen (1-24): ");
