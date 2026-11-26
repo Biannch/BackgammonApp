@@ -12,11 +12,11 @@ public class ModeloBackgammonMain implements Observable {
     private final Tablero tablero;
     private final Dado dado1;
     private final Dado dado2;
-    private Jugador jugadorBlancas;
-    private Jugador jugadorNegras;
+    private Jugador jugador1;
+    private Jugador jugador2;
     private Turno turno;
     private Reglamento reglamento;
-    private boolean partidaIniciada = false;
+    private EstadoPartida estadoPartida;
 
     public ModeloBackgammonMain(){
         this.observadores = new ArrayList<>();
@@ -24,7 +24,17 @@ public class ModeloBackgammonMain implements Observable {
         this.dado1 = new Dado();
         this.dado2 = new Dado();
         this.reglamento = new Reglamento();
+        this.estadoPartida = EstadoPartida.NO_INICIADA;
         // turno y jug se definen luego de tirar los dados y que salga el mas grande
+    }
+
+    public void registrarUsuarios(String nombre1, String nombre2) {
+        this.jugador1 = new Jugador(nombre1);
+        this.jugador2 = new Jugador(nombre2);
+        this.estadoPartida = EstadoPartida.PRIMER_TIRO;
+    }
+
+    public void primerLanzamiento(){
     }
 
     public void tirarDados(){
@@ -63,8 +73,8 @@ public class ModeloBackgammonMain implements Observable {
         return null;
     }
 
-    public boolean esPartidaIniciada(){
-        return partidaIniciada;
+    public EstadoPartida estadoPartida(){
+        return estadoPartida;
     }
 
     @Override

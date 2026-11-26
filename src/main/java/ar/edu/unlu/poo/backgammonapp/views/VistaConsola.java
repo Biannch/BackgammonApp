@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class VistaConsola {
-    private Scanner scan = new Scanner(System.in); // instancia scanner cuya entrada va a ser el teclado
+    private final Scanner scan = new Scanner(System.in); // instancia scanner cuya entrada va a ser el teclado
 
-    public void mostrarTablero(Tablero tablero) {
+    public void mostrarTablero(Tablero tablero){
         System.out.println("+================================ TABLERO DE BACKGAMMON =======================================+");
         System.out.println("|    13    14    15    16    17    18    | BAR |    19    20    21    22    23    24    | CAS ||");
         System.out.println("|==============================================================================================|");
@@ -55,29 +55,45 @@ public class VistaConsola {
         System.out.println("+==============================================================================================+");
     }
 
-    private String informacionPunta(Punta punta) {
+    private String informacionPunta(Punta punta){
         if (punta.estaVacia()) return "[--]";
         String letra = (punta.getColorDom() == ColorFicha.BLANCA) ? "B" : "N";
         return String.format("[%d%s]", punta.getCantidadFichas(), letra);
     }
 
-    public int obtenerOpcion() {
+    public int obtenerOpcion(){
         System.out.println("\n1. Tirar dados | 2. Mover ficha | 3. Pasar turno | 0. Salir");
         System.out.print("Opción: ");
         return scan.nextInt();
     }
 
-    public int pedirPunta(String mensaje) {
+    public int pedirPunta(String mensaje){
         System.out.print(mensaje);
         int num = scan.nextInt();
         return (num >= 1 && num <= 24) ? (num - 1) : num; // Solo resta 1 para pasar de 1..24 a 0..23
     }
 
-    public void mostrarDados(List<Integer> dados) {
+    public String pedirString(String mensaje){
+        System.out.printf(">> " + mensaje);
+        while(!scan.hasNext()){
+            System.out.println("Error: eso no es un string.");
+        }
+        return scan.nextLine(); // no deja el \n en el búfer
+    }
+
+    public int pedirInt(String mensaje){
+        System.out.printf(">> " + mensaje);
+        while(!scan.hasNextInt()){
+            System.out.println("Error: eso no es un número entero.");
+        }
+        return scan.nextInt();
+    }
+
+    public void mostrarDados(List<Integer> dados){
         System.out.println("Dados disponibles: " + dados);
     }
 
-    public void mostrarMensaje(String mensaje) {
+    public void mostrarMensaje(String mensaje){
         System.out.println(">> " + mensaje);
     }
 }

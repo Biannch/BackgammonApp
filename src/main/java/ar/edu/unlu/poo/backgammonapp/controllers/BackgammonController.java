@@ -1,5 +1,6 @@
 package ar.edu.unlu.poo.backgammonapp.controllers;
 
+import ar.edu.unlu.poo.backgammonapp.model.EstadoPartida;
 import ar.edu.unlu.poo.backgammonapp.model.ModeloBackgammonMain;
 import ar.edu.unlu.poo.backgammonapp.observer.Observador;
 import ar.edu.unlu.poo.backgammonapp.views.VistaConsola;
@@ -19,8 +20,18 @@ public class BackgammonController implements Observador {
 
     public void iniciar(){
 
-        if(!modelo.esPartidaIniciada()){ // si no está iniciada la partida
-
+        if(modelo.estadoPartida() == EstadoPartida.NO_INICIADA){ // si no está iniciada la partida
+            // llamar al registro de nombres de los usuarios
+            // la vista pide los datos
+            String str1 = vistaConsol.pedirString("Jugador 1: Ingrese su nombre: ");
+            String str2 = vistaConsol.pedirString("Jugador 2: Ingrese su nombre: ");
+            // el controlador le pasa los nombres al modelo
+            modelo.registrarUsuarios(str1, str2);
+            vistaConsol.mostrarMensaje("Bienvenidos " + str1 + " y " + str2);
+        }
+        else if(modelo.estadoPartida() == EstadoPartida.PRIMER_TIRO){
+            // desempatar para ver quien empieza
+            modelo.primerLanzamiento();
         }
 
         int opcion = -1;
