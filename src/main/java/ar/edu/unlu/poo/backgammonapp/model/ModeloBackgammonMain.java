@@ -37,7 +37,6 @@ public class ModeloBackgammonMain implements Observable {
     public void sortearTurnoInicial(){
         this.turno = new Turno(jugador1, jugador2);
         turno.primerTiro(dado1, dado2);
-        notificarObservadores();
     }
 
     public void repartirColores(ColorFicha color){

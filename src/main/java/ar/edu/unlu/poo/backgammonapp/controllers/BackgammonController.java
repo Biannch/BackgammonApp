@@ -39,7 +39,6 @@ public class BackgammonController implements Observador {
 
             switch (opcion){
                 case 1 -> {
-                    vistaConsol.mostrarMensaje(">> TURNO ACTUAL -> " + modelo.getJugadorActual().getNombre());
                     if(!modelo.tirarDados()){
                         vistaConsol.mostrarMensaje(">> Usted ya tiene dados para usar.");
                     }
@@ -63,6 +62,7 @@ public class BackgammonController implements Observador {
     public void actualizar() {
         // Cuando el modelo avisa que hubo un cambio, actualizamos la vista
         vistaConsol.mostrarTablero(modelo.getTablero());
+        vistaConsol.mostrarMensaje(">> TURNO ACTUAL -> " + modelo.getJugadorActual().getNombre());
         vistaConsol.mostrarDados(modelo.getDadosDisponibles());
     }
 

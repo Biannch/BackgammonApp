@@ -6,10 +6,10 @@ import java.util.List;
 public class Tablero {
     private static final int CANT_PUNTAS = 24;
     private final List<Punta> puntaList = new ArrayList<>();
-    private Barra barraBlancas = new Barra();
-    private Barra barraNegras = new Barra();
-    private Salida salidaBlancas = new Salida();
-    private Salida salidaNegras = new Salida();
+    private final Barra barraBlancas = new Barra();
+    private final Barra barraNegras = new Barra();
+    private final Salida salidaBlancas = new Salida();
+    private final Salida salidaNegras = new Salida();
 
     public Tablero(){
         for (int i = 0; i < CANT_PUNTAS; i++) {

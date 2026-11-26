@@ -63,9 +63,9 @@ public class VistaConsola {
 
     public int obtenerOpcion(){
         int opcion;
-        System.out.println("\n1. Tirar dados | 2. Mover ficha | 3. Pasar turno | 0. Salir");
+        System.out.print("\n1. Tirar dados | 2. Mover ficha | 3. Pasar turno | 0. Salir\n");
         do {
-            opcion = pedirInt("Error: opción no válida. Seleccione de nuevo: ");
+            opcion = pedirInt("Opción: ");
         } while (opcion < 1 || opcion > 3);
         return opcion;
     }
@@ -79,7 +79,7 @@ public class VistaConsola {
     public ColorFicha pedirColor(String nombreJugador){
         int opcion;
         do {
-            opcion = pedirInt(">> " + nombreJugador + ", elija un color:%n1. Blanco%n2. Negro%n>> ");
+            opcion = pedirInt("%n>> " + nombreJugador + ", usted comienza. Elija un color:%n1. Blanco%n2. Negro%n>> ");
         } while (opcion != 1 && opcion != 2);
         return (opcion == 1) ? ColorFicha.BLANCA : ColorFicha.NEGRA;
     }
