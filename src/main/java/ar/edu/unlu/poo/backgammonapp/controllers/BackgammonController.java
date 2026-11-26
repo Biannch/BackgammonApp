@@ -6,8 +6,6 @@ import ar.edu.unlu.poo.backgammonapp.model.ModeloBackgammonMain;
 import ar.edu.unlu.poo.backgammonapp.observer.Observador;
 import ar.edu.unlu.poo.backgammonapp.views.VistaConsola;
 
-import java.util.List;
-
 public class BackgammonController implements Observador {
     // el controlador conoce algo del modelo, en este caso la clase main de entrada al modelo
     private ModeloBackgammonMain modelo;
@@ -28,11 +26,11 @@ public class BackgammonController implements Observador {
             vistaConsol.mostrarMensaje("\n>> Bienvenid@s " + str1 + " y " + str2);
         }
         if(modelo.estadoPartida() == EstadoPartida.PRIMER_TIRO){
-            modelo.comenzarPartida();
+            modelo.sortearTurnoInicial();
             vistaConsol.mostrarMensaje("Se han tirado los dados para ver quien comienza.");
             ColorFicha color = vistaConsol.pedirColor(modelo.getJugadorActual().getNombre());
             modelo.repartirColores(color);
-        }
+        } // todo dividir registro por jugador y separar esto a otro bloque de código
 
         int opcion = -1;
         while (opcion != 0){
@@ -65,7 +63,7 @@ public class BackgammonController implements Observador {
     public void actualizar() {
         // Cuando el modelo avisa que hubo un cambio, actualizamos la vista
         vistaConsol.mostrarTablero(modelo.getTablero());
-        vistaConsol.mostrarDados((List<Integer>) modelo.getDadosDisponibles());
+        vistaConsol.mostrarDados(modelo.getDadosDisponibles());
     }
 
 //    @FXML

@@ -34,7 +34,7 @@ public class ModeloBackgammonMain implements Observable {
         this.estadoPartida = EstadoPartida.PRIMER_TIRO;
     }
 
-    public void comenzarPartida(){
+    public void sortearTurnoInicial(){
         this.turno = new Turno(jugador1, jugador2);
         turno.primerTiro(dado1, dado2);
         notificarObservadores();
@@ -43,6 +43,7 @@ public class ModeloBackgammonMain implements Observable {
     public void repartirColores(ColorFicha color){
         getJugadorActual().setColorJugador(color);
         turno.getJugadorSiguiente().setColorJugador(color.opuesto());
+        tablero.inicializar();
         this.estadoPartida = EstadoPartida.EN_CURSO;
         notificarObservadores();
     }

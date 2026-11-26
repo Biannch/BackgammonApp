@@ -15,7 +15,6 @@ public class Tablero {
         for (int i = 0; i < CANT_PUNTAS; i++) {
             puntaList.add(new Punta(i+1));
         }
-        inicializar();
     }
 
     public void inicializar() {
