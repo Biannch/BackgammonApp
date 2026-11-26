@@ -62,9 +62,12 @@ public class VistaConsola {
     }
 
     public int obtenerOpcion(){
+        int opcion;
         System.out.println("\n1. Tirar dados | 2. Mover ficha | 3. Pasar turno | 0. Salir");
-        System.out.print("Opción: ");
-        return scan.nextInt();
+        do {
+            opcion = pedirInt("Error: opción no válida. Seleccione de nuevo: ");
+        } while (opcion < 1 || opcion > 3);
+        return opcion;
     }
 
     public int pedirPunta(String mensaje){
@@ -73,20 +76,36 @@ public class VistaConsola {
         return (num >= 1 && num <= 24) ? (num - 1) : num; // Solo resta 1 para pasar de 1..24 a 0..23
     }
 
+    public ColorFicha pedirColor(String nombreJugador){
+        int opcion;
+        do {
+            opcion = pedirInt(">> " + nombreJugador + ", elija un color:%n1. Blanco%n2. Negro%n>> ");
+        } while (opcion != 1 && opcion != 2);
+        return (opcion == 1) ? ColorFicha.BLANCA : ColorFicha.NEGRA;
+    }
+
     public String pedirString(String mensaje){
         System.out.printf(mensaje);
         while(!scan.hasNext()){
             System.out.println("Error: eso no es un string.");
+            scan.next();
+            System.out.printf(mensaje);
         }
-        return scan.nextLine(); // no deja el \n en el búfer
+        String str = scan.next();
+        scan.nextLine(); // limpiar el enter
+        return str;
     }
 
     public int pedirInt(String mensaje){
         System.out.printf(mensaje);
         while(!scan.hasNextInt()){
             System.out.println("Error: eso no es un número entero.");
+            scan.next();
+            System.out.printf(mensaje);
         }
-        return scan.nextInt();
+        int num = scan.nextInt();
+        scan.nextLine(); // limpiar el enter
+        return num;
     }
 
     public void mostrarDados(List<Integer> dados){
