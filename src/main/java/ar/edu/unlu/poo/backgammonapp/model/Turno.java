@@ -15,6 +15,18 @@ public class Turno {
         this.jugadorSiguiente = jugadorSiguiente;
     }
 
+    public void primerTiro(Dado dado1, Dado dado2){
+        int v1 = dado1.tirar();
+        int v2 = dado2.tirar();
+
+        if(v2 > v1){
+            cambiarTurno();
+        }
+        this.movimientosDisponibles.clear();
+        Collections.addAll(this.movimientosDisponibles, v1, v2);
+        this.dadosTirados = true;
+    }
+
     public void cambiarTurno(){
         Jugador temp = this.jugadorActual;
         this.jugadorActual = this.jugadorSiguiente;
@@ -52,6 +64,10 @@ public class Turno {
 
     public Jugador getJugadorActual(){
         return this.jugadorActual;
+    }
+
+    public Jugador getJugadorSiguiente(){
+        return this.jugadorSiguiente;
     }
 
     public List<Integer> getMovimientosDisponibles(){

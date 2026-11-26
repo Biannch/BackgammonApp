@@ -25,7 +25,7 @@ public class ModeloBackgammonMain implements Observable {
         this.dado2 = new Dado();
         this.reglamento = new Reglamento();
         this.estadoPartida = EstadoPartida.NO_INICIADA;
-        // turno y jug se definen luego de tirar los dados y que salga el mas grande
+        // turno se define luego de tirar los dados y que salga el mas grande
     }
 
     public void registrarUsuarios(String nombre1, String nombre2) {
@@ -34,25 +34,33 @@ public class ModeloBackgammonMain implements Observable {
         this.estadoPartida = EstadoPartida.PRIMER_TIRO;
     }
 
-    public void primerLanzamiento(){
+    public void comenzarPartida(){
+        this.turno = new Turno(jugador1, jugador2);
+        turno.primerTiro(dado1, dado2);
         // cada jugador tira un solo dado
         // el jugador que sacó mayor puntaje empieza
         // elige un color y usa esos 2 dados para su primer movimiento
         // al otro jugador se le asigna el color restante
     }
 
-    public void tirarDados(){
-        if(turno.yaTiroDados()){
-            return;
-        }
-        // el Modelo le pide al Turno que el jugador actual tire los dados del juego
-        turno.tirarDados(dado1, dado2);
+    public void repartirColores(ColorFicha color){
+        getJugadorActual().setColorJugador(color);
+        turno.getJugadorSiguiente().setColorJugador(color.opuesto());
+    }
 
-        // Si con los dados que salieron no tiene ningún movimiento legal, pierde el turno
-        if (!reglamento.tieneMovimientosPosibles(tablero, turno)){
-            cambiarTurno();
+    public boolean tirarDados(){
+        if(turno.yaTiroDados()){
+            return false; // como ya tiene dados, no los tira
         }
+        turno.tirarDados(dado1, dado2);
+        // el Modelo le pide al Turno que el jugador actual tire los dados del juego
+
+//        // Si con los dados que salieron no tiene ningún movimiento legal, pierde el turno
+//        if (!reglamento.tieneMovimientosPosibles(tablero, turno)){
+//            cambiarTurno();
+//        }
         notificarObservadores();
+        return true;
     }
 
     public Tablero getTablero(){

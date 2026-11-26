@@ -1,5 +1,6 @@
 package ar.edu.unlu.poo.backgammonapp.controllers;
 
+import ar.edu.unlu.poo.backgammonapp.model.ColorFicha;
 import ar.edu.unlu.poo.backgammonapp.model.EstadoPartida;
 import ar.edu.unlu.poo.backgammonapp.model.ModeloBackgammonMain;
 import ar.edu.unlu.poo.backgammonapp.observer.Observador;
@@ -20,18 +21,20 @@ public class BackgammonController implements Observador {
 
     public void iniciar(){
 
-        if(modelo.estadoPartida() == EstadoPartida.NO_INICIADA){ // si no está iniciada la partida
-            // llamar al registro de nombres de los usuarios
-            // la vista pide los datos
-            String str1 = vistaConsol.pedirString(">> Jugador 1: Ingrese su nombre: ");
+        if(modelo.estadoPartida() == EstadoPartida.NO_INICIADA){ // si no está iniciada la partida, reg users
+            String str1 = vistaConsol.pedirString(">> Jugador 1: Ingrese su nombre: ");// la vista pide los datos
             String str2 = vistaConsol.pedirString(">> Jugador 2: Ingrese su nombre: ");
-            // el controlador le pasa los nombres al modelo
-            modelo.registrarUsuarios(str1, str2);
+            modelo.registrarUsuarios(str1, str2); // el controlador le pasa los nombres al modelo
             vistaConsol.mostrarMensaje("\n>> Bienvenid@s " + str1 + " y " + str2);
         }
-        else if(modelo.estadoPartida() == EstadoPartida.PRIMER_TIRO){
-            // desempatar para ver quien empieza
-            modelo.primerLanzamiento();
+        if(modelo.estadoPartida() == EstadoPartida.PRIMER_TIRO){
+            modelo.comenzarPartida();
+            vistaConsol.mostrarMensaje("Se han tirado los dados para ver quien comienza.");
+            vistaConsol.mostrarMensaje(">> " + modelo.getJugadorActual().getNombre() + " elija un color.\n");
+            int pedirInt = vistaConsol.pedirInt("1. Blanco\n2.Negro\n");
+            //todo chequear que el valor sea un 1 o un 2
+            ColorFicha color = (ColorFicha.BLANCA.ordinal() == pedirInt-1) ? ColorFicha.BLANCA : ColorFicha.NEGRA;
+            modelo.repartirColores(color);
         }
 
         int opcion = -1;
@@ -43,7 +46,13 @@ public class BackgammonController implements Observador {
             opcion = vistaConsol.obtenerOpcion();
 
             switch (opcion){
-                case 1 -> modelo.tirarDados();
+                case 1 -> {
+                    vistaConsol.mostrarMensaje(">> TURNO ACTUAL -> " + modelo.getJugadorActual().getNombre());
+                    if(!modelo.tirarDados()){
+                        vistaConsol.mostrarMensaje(">> Usted ya tiene dados para usar.");
+                    }
+                    // mostrar mensaje de valores disponibles para usar
+                }
                 case 2 -> {
                     int origen = vistaConsol.pedirPunta(">> Punta origen (1-24): ");
                     int destino = vistaConsol.pedirPunta(">> Punta destino (1-24): ");
