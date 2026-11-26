@@ -19,7 +19,7 @@ public class Turno {
         int v1 = dado1.tirar();
         int v2 = dado2.tirar();
 
-        if(v2 > v1){
+        if(v2 > v1){ // todo contemplar empate
             cambiarTurno();
         }
         this.movimientosDisponibles.clear();

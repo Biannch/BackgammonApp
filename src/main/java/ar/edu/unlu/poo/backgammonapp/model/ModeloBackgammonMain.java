@@ -37,15 +37,14 @@ public class ModeloBackgammonMain implements Observable {
     public void comenzarPartida(){
         this.turno = new Turno(jugador1, jugador2);
         turno.primerTiro(dado1, dado2);
-        // cada jugador tira un solo dado
-        // el jugador que sacó mayor puntaje empieza
-        // elige un color y usa esos 2 dados para su primer movimiento
-        // al otro jugador se le asigna el color restante
+        notificarObservadores();
     }
 
     public void repartirColores(ColorFicha color){
         getJugadorActual().setColorJugador(color);
         turno.getJugadorSiguiente().setColorJugador(color.opuesto());
+        this.estadoPartida = EstadoPartida.EN_CURSO;
+        notificarObservadores();
     }
 
     public boolean tirarDados(){
