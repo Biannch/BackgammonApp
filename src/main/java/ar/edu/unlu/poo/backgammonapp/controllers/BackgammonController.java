@@ -18,43 +18,45 @@ public class BackgammonController implements Observador {
     }
 
     public void iniciar(){
-
-        if(modelo.estadoPartida() == EstadoPartida.NO_INICIADA){ // si no está iniciada la partida, reg users
-            String str1 = vistaConsol.pedirString(">> Jugador 1: Ingrese su nombre: ");// la vista pide los datos
-            String str2 = vistaConsol.pedirString(">> Jugador 2: Ingrese su nombre: ");
-            modelo.registrarUsuarios(str1, str2); // el controlador le pasa los nombres al modelo
-            vistaConsol.mostrarMensaje("\n>> Bienvenid@s " + str1 + " y " + str2);
-        }
-        if(modelo.estadoPartida() == EstadoPartida.PRIMER_TIRO){
-            modelo.sortearTurnoInicial();
-            vistaConsol.mostrarMensaje("Se han tirado los dados para ver quien comienza.");
-            ColorFicha color = vistaConsol.pedirColor(modelo.getJugadorActual().getNombre());
-            modelo.repartirColores(color);
-        } // todo dividir registro por jugador y separar esto a otro bloque de código
-
+        prepararPartida();
         int opcion = -1;
         while (opcion != 0){
-            //todo if con opcion de iniciar partida???
             opcion = vistaConsol.obtenerOpcion();
 
             switch (opcion){
-                case 1 -> {
+                case 1 -> { // tirar dados
                     if(!modelo.tirarDados()){
                         vistaConsol.mostrarMensaje(">> Usted ya tiene dados para usar.");
                     }
                     vistaConsol.mostrarDados(modelo.getDadosDisponibles());
                 }
-                case 2 -> {
+                case 2 -> { // mover ficha
                     int origen = vistaConsol.pedirPunta(">> Punta origen (1-24): ");
                     int destino = vistaConsol.pedirPunta(">> Punta destino (1-24): ");
                     if (!modelo.moverFicha(origen, destino)){
                         vistaConsol.mostrarMensaje("Movimiento inválido según el reglamento.");
                     }
                 }
-                case 3 -> modelo.cambiarTurno();
+                case 3 -> modelo.cambiarTurno(); // pasar turno
                 case 0 -> vistaConsol.mostrarMensaje("Saliendo del juego...");
                 default -> vistaConsol.mostrarMensaje("Opción incorrecta.");
             }
+        }
+    }
+
+    private void prepararPartida(){
+        if(modelo.estadoPartida() == EstadoPartida.NO_INICIADA){ // registrar usuarios
+            String str1 = vistaConsol.pedirString(">> Jugador 1, ingrese su nombre: ");
+            modelo.registrarJugador(str1); // todo que perdir string verifique no ingresar nada nulo
+            String str2 = vistaConsol.pedirString(">> Jugador 2, ingrese su nombre: ");
+            modelo.registrarJugador(str2);
+            vistaConsol.mostrarMensaje("\n>> Bienvenid@s " + str1 + " y " + str2);
+        }
+        if(modelo.estadoPartida() == EstadoPartida.PRIMER_TIRO){
+            modelo.sortearTurnoInicial();
+            vistaConsol.mostrarMensaje("Se han tirado los dados para ver quien comienza.");
+            ColorFicha colorPrimerJug = vistaConsol.pedirColor(modelo.getJugadorActual().getNombre());
+            modelo.repartirColores(colorPrimerJug);
         }
     }
 

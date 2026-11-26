@@ -70,7 +70,7 @@ public class VistaConsola {
         return opcion;
     }
 
-    public int pedirPunta(String mensaje){
+    public int pedirPunta(String mensaje){ // todo borrar esto que es básicamente pedir int
         System.out.print(mensaje);
         int num = scan.nextInt();
         return (num >= 1 && num <= 24) ? (num - 1) : num; // Solo resta 1 para pasar de 1..24 a 0..23
