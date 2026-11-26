@@ -30,18 +30,12 @@ public class BackgammonController implements Observador {
         if(modelo.estadoPartida() == EstadoPartida.PRIMER_TIRO){
             modelo.comenzarPartida();
             vistaConsol.mostrarMensaje("Se han tirado los dados para ver quien comienza.");
-            vistaConsol.mostrarMensaje(">> " + modelo.getJugadorActual().getNombre() + " elija un color.\n");
-            int pedirInt = vistaConsol.pedirInt("1. Blanco\n2.Negro\n");
-            //todo chequear que el valor sea un 1 o un 2
-            ColorFicha color = (ColorFicha.BLANCA.ordinal() == pedirInt-1) ? ColorFicha.BLANCA : ColorFicha.NEGRA;
+            ColorFicha color = vistaConsol.pedirColor(modelo.getJugadorActual().getNombre());
             modelo.repartirColores(color);
         }
 
         int opcion = -1;
         while (opcion != 0){
-            vistaConsol.mostrarTablero(modelo.getTablero());
-            //vistaConsol.mostrarMensaje("Turno actual: " + modelo.getJugadorActual().getNombre());
-
             //todo if con opcion de iniciar partida???
             opcion = vistaConsol.obtenerOpcion();
 
