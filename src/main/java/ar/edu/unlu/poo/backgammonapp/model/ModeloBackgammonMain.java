@@ -9,12 +9,12 @@ import java.util.List;
 public class ModeloBackgammonMain implements Observable {
     private List<Observador> observadores;
 
-    private Tablero tablero;
+    private final Tablero tablero;
+    private final Dado dado1;
+    private final Dado dado2;
     private Jugador jugadorBlancas;
     private Jugador jugadorNegras;
     private Turno turno;
-    private Dado dado1;
-    private Dado dado2;
     private Reglamento reglamento;
     private boolean partidaIniciada = false;
 
@@ -28,10 +28,10 @@ public class ModeloBackgammonMain implements Observable {
     }
 
     public void tirarDados(){
-        if(turno.estaDadosTirados()){
+        if(turno.yaTiroDados()){
             return;
         }
-        // el Modelo le pide al Turno que tire usando los dados del juego
+        // el Modelo le pide al Turno que el jugador actual tire los dados del juego
         turno.tirarDados(dado1, dado2);
 
         // Si con los dados que salieron no tiene ningún movimiento legal, pierde el turno
@@ -46,7 +46,7 @@ public class ModeloBackgammonMain implements Observable {
     }
 
     public Jugador getJugadorActual(){
-        return turno.getJugadorActivo();
+        return turno.getJugadorActual();
     }
 
     public boolean moverFicha(int origen, int destino){
@@ -55,11 +55,7 @@ public class ModeloBackgammonMain implements Observable {
     }
 
     public void cambiarTurno(){
-        if (turno.getJugadorActivo().getColorJugador() == ColorFicha.BLANCA) {
-            turno.setJugadorActivo(jugadorNegras);
-        } else {
-            turno.setJugadorActivo(jugadorBlancas);
-        }
+        turno.cambiarTurno();
         notificarObservadores();
     }
 

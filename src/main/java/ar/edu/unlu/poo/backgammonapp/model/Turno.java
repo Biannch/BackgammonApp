@@ -6,41 +6,55 @@ import java.util.List;
 
 public class Turno {
     private boolean dadosTirados = false;
-    private Jugador jugadorActivo;
-    private List<Integer> movimientosDisponibles = new ArrayList<>();
+    private Jugador jugadorActual;
+    private Jugador jugadorSiguiente;
+    private final List<Integer> movimientosDisponibles = new ArrayList<>();
 
-    public Turno(Jugador jugadorActivo) {
-        this.jugadorActivo = jugadorActivo;
+    public Turno(Jugador jugadorActual, Jugador jugadorSiguiente){
+        this.jugadorActual = jugadorActual;
+        this.jugadorSiguiente = jugadorSiguiente;
     }
 
-    public void tirarDados(Dado dado1, Dado dado2) {
+    public void cambiarTurno(){
+        Jugador temp = this.jugadorActual;
+        this.jugadorActual = this.jugadorSiguiente;
+        this.jugadorSiguiente = temp;
+        this.dadosTirados = false;
+        this.movimientosDisponibles.clear();
+    }
+
+    public void tirarDados(Dado dado1, Dado dado2){
+        if (yaTiroDados()){
+            return;
+        }
         int v1 = dado1.tirar();
         int v2 = dado2.tirar();
 
         this.movimientosDisponibles.clear();
         Collections.addAll(this.movimientosDisponibles, v1, v2);
-//        this.movimientosDisponibles.add(v1);
-//        this.movimientosDisponibles.add(v2);
-
         if (v1 == v2){
             Collections.addAll(this.movimientosDisponibles, v1, v2);
         }
-        this.dadosTirados = true; //todo chequear si podría dar error
+        this.dadosTirados = true;
     }
 
-    public boolean estaDadosTirados(){
+    public void consumirMovimiento(int valorDado){
+        this.movimientosDisponibles.remove(Integer.valueOf(valorDado));
+    }
+
+    public boolean tieneMovimientosDisponibles(){
+        return !this.movimientosDisponibles.isEmpty();
+    }
+
+    public boolean yaTiroDados(){
         return this.dadosTirados;
     }
 
-    public Jugador getJugadorActivo() {
-        return jugadorActivo;
+    public Jugador getJugadorActual(){
+        return this.jugadorActual;
     }
 
     public List<Integer> getMovimientosDisponibles(){
-        return movimientosDisponibles;
-    }
-
-    public void setJugadorActivo(Jugador jugador){
-        this.jugadorActivo = jugador;
+        return Collections.unmodifiableList(this.movimientosDisponibles);
     }
 }
