@@ -35,6 +35,10 @@ public class ModeloBackgammonMain implements Observable {
     }
 
     public void primerLanzamiento(){
+        // cada jugador tira un solo dado
+        // el jugador que sacó mayor puntaje empieza
+        // elige un color y usa esos 2 dados para su primer movimiento
+        // al otro jugador se le asigna el color restante
     }
 
     public void tirarDados(){

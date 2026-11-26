@@ -23,11 +23,11 @@ public class BackgammonController implements Observador {
         if(modelo.estadoPartida() == EstadoPartida.NO_INICIADA){ // si no está iniciada la partida
             // llamar al registro de nombres de los usuarios
             // la vista pide los datos
-            String str1 = vistaConsol.pedirString("Jugador 1: Ingrese su nombre: ");
-            String str2 = vistaConsol.pedirString("Jugador 2: Ingrese su nombre: ");
+            String str1 = vistaConsol.pedirString(">> Jugador 1: Ingrese su nombre: ");
+            String str2 = vistaConsol.pedirString(">> Jugador 2: Ingrese su nombre: ");
             // el controlador le pasa los nombres al modelo
             modelo.registrarUsuarios(str1, str2);
-            vistaConsol.mostrarMensaje("Bienvenidos " + str1 + " y " + str2);
+            vistaConsol.mostrarMensaje("\n>> Bienvenid@s " + str1 + " y " + str2);
         }
         else if(modelo.estadoPartida() == EstadoPartida.PRIMER_TIRO){
             // desempatar para ver quien empieza
@@ -45,8 +45,8 @@ public class BackgammonController implements Observador {
             switch (opcion){
                 case 1 -> modelo.tirarDados();
                 case 2 -> {
-                    int origen = vistaConsol.pedirPunta("Punta origen (1-24): ");
-                    int destino = vistaConsol.pedirPunta("Punta destino (1-24): ");
+                    int origen = vistaConsol.pedirPunta(">> Punta origen (1-24): ");
+                    int destino = vistaConsol.pedirPunta(">> Punta destino (1-24): ");
                     if (!modelo.moverFicha(origen, destino)){
                         vistaConsol.mostrarMensaje("Movimiento inválido según el reglamento.");
                     }

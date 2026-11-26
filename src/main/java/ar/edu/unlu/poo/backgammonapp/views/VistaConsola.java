@@ -74,7 +74,7 @@ public class VistaConsola {
     }
 
     public String pedirString(String mensaje){
-        System.out.printf(">> " + mensaje);
+        System.out.printf(mensaje);
         while(!scan.hasNext()){
             System.out.println("Error: eso no es un string.");
         }
@@ -82,7 +82,7 @@ public class VistaConsola {
     }
 
     public int pedirInt(String mensaje){
-        System.out.printf(">> " + mensaje);
+        System.out.printf(mensaje);
         while(!scan.hasNextInt()){
             System.out.println("Error: eso no es un número entero.");
         }
@@ -94,6 +94,6 @@ public class VistaConsola {
     }
 
     public void mostrarMensaje(String mensaje){
-        System.out.println(">> " + mensaje);
+        System.out.println(mensaje);
     }
 }
