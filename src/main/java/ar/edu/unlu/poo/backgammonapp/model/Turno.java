@@ -8,7 +8,7 @@ public class Turno {
     private boolean dadosTirados = false;
     private Jugador jugadorActual;
     private Jugador jugadorSiguiente;
-    private final List<Integer> movimientosDisponibles = new ArrayList<>();
+    private final List<Integer> valoresDisponibles = new ArrayList<>();
 
     public Turno(Jugador jugadorActual, Jugador jugadorSiguiente){
         this.jugadorActual = jugadorActual;
@@ -22,8 +22,8 @@ public class Turno {
         if(v2 > v1){ // todo contemplar empate
             cambiarTurno();
         }
-        this.movimientosDisponibles.clear();
-        Collections.addAll(this.movimientosDisponibles, v1, v2);
+        this.valoresDisponibles.clear();
+        Collections.addAll(this.valoresDisponibles, v1, v2);
         this.dadosTirados = true;
     }
 
@@ -32,7 +32,7 @@ public class Turno {
         this.jugadorActual = this.jugadorSiguiente;
         this.jugadorSiguiente = temp;
         this.dadosTirados = false;
-        this.movimientosDisponibles.clear();
+        this.valoresDisponibles.clear();
     }
 
     public void tirarDados(Dado dado1, Dado dado2){
@@ -42,20 +42,20 @@ public class Turno {
         int v1 = dado1.tirar();
         int v2 = dado2.tirar();
 
-        this.movimientosDisponibles.clear();
-        Collections.addAll(this.movimientosDisponibles, v1, v2);
+        this.valoresDisponibles.clear();
+        Collections.addAll(this.valoresDisponibles, v1, v2);
         if (v1 == v2){
-            Collections.addAll(this.movimientosDisponibles, v1, v2);
+            Collections.addAll(this.valoresDisponibles, v1, v2);
         }
         this.dadosTirados = true;
     }
 
-    public void consumirMovimiento(int valorDado){
-        this.movimientosDisponibles.remove(Integer.valueOf(valorDado));
+    public void consumirValor(int valorDado){
+        this.valoresDisponibles.remove(Integer.valueOf(valorDado));
     }
 
-    public boolean tieneMovimientosDisponibles(){
-        return !this.movimientosDisponibles.isEmpty();
+    public boolean tieneValoresDisponibles(){
+        return !this.valoresDisponibles.isEmpty();
     }
 
     public boolean yaTiroDados(){
@@ -70,7 +70,7 @@ public class Turno {
         return this.jugadorSiguiente;
     }
 
-    public List<Integer> getMovimientosDisponibles(){
-        return Collections.unmodifiableList(this.movimientosDisponibles);
+    public List<Integer> getValoresDisponibles(){
+        return Collections.unmodifiableList(this.valoresDisponibles);
     }
 }

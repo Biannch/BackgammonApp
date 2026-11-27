@@ -70,16 +70,25 @@ public class ModeloBackgammonMain implements Observable {
         return true;
     }
 
-    public Tablero getTablero(){
-        return tablero;
-    }
-
-    public Jugador getJugadorActual(){
-        return turno.getJugadorActual();
-    }
-
     public boolean moverFicha(int origen, int destino){
+        // le pide a reglamento los movimientosPosibles
+        // busca si en la lista coincide alguno con origen, destino
+        // si la lista está vacía ---> no hay movs. posibles, pasar turno
+        // si nada coincide ---> mov. ilegal
+        // si hay match, le pasamos el mov a tablero para que lo ejecute
+        // ModeloBackgammonMain consume el dado del turno
+        // se vuelven a consultar movs posibles (por si hay q pasar el turno otra vez)
         notificarObservadores();
+        return false;
+    }
+
+    public boolean selectPuntaOrigen(int indice){
+        // reglamento verifica si el color de la ficha coincide con el jugador
+        // reglamento verifica si hay un número válido para esa ficha
+        return false;
+    }
+
+    public boolean selectPuntaDestino(int indice){
         return false;
     }
 
@@ -88,8 +97,16 @@ public class ModeloBackgammonMain implements Observable {
         notificarObservadores();
     }
 
+    public Tablero getTablero(){
+        return tablero;
+    }
+
+    public Jugador getJugadorActual(){
+        return turno.getJugadorActual();
+    }
+
     public List<Integer> getDadosDisponibles(){
-        return turno.getMovimientosDisponibles();
+        return turno.getValoresDisponibles();
     }
 
     public EstadoPartida estadoPartida(){

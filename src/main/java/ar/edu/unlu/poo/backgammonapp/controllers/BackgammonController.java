@@ -31,6 +31,11 @@ public class BackgammonController implements Observador {
                     vistaConsol.mostrarDados(modelo.getDadosDisponibles());
                 }
                 case 2 -> { // mover ficha
+                    // el reglamento analiza qué fichas se pueden mover en base a los dados
+                    // 1. seleccion punta origen >> validación
+                    //          modelo.selectPuntaOrigen(int indice);
+                    // 2. seleccion punta destino >> validación
+                    //          modelo.selectPuntaDestino(int indice);
                     int origen = vistaConsol.pedirPunta(">> Punta origen (1-24): ");
                     int destino = vistaConsol.pedirPunta(">> Punta destino (1-24): ");
                     if (!modelo.moverFicha(origen, destino)){
